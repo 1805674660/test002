@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;padding: 0;
+            color: blue;
+        }
+        .newList{
+            height: 100px;
+            overflow: hidden;
+            background-color: #ccc;
+            position: relative;
+        }
+        html{
+            height: 100%;
+        }
+        body{
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="words" />
+    <input type="button" value="提交" id="btn" />
+    <script>
+        function Bullet(words){
+            this.span = document.createElement("span");
+            if(Math.random()<0.2){
+            this.span.style.fontSize = "50px";
+                }
+        this.span.style.position = "absolute";
+        this.span.style.left = document.body.offsetWidth +"px";
+        this.span.style.top = Math.floor(document.body.offsetHeight*Math.random())+"px"
+        this.timer = null;
+        this.span.innerHTML = words;
+        this.init()
+        this.move()
+        }
+        Bullet.prototype.init = function(){
+            document.body.appendChild(this.span)
+        }
+        
+        Bullet.prototype.move = function(){
+            let that = this;
+            this.timer = setInterval(function(){
+                that.span.style.left = parseInt(that.span.style.left)-4+"px";
+                if(parseInt(that.span.style.left)<-1*that.span.offsetWidth){
+                    document.body.removeChild(that.span)
+                    clearInterval(that.timer)
+                }
+            },50)
+        }
+        
+        var btn = document.getElementById("btn");
+        btn.onclick = function(){
+            let words = document.getElementById("words").value;
+            let obj = new Bullet(words);
+        }
+    </script>
+</body>
+</html>
